@@ -12,7 +12,7 @@ const navigate = useNavigate()
 const {householdId} = useParams()
 const [showChoreModal, setShowChoreModal] = useState(false)
 const active = showChoreModal ? ("is-active"):("")
-const [newChore, setNewChore] = useState({})
+const [newChore, setNewChore] = useState({householdId})
 
 useEffect(()=>{
 getHouseholdChores(householdId).then((data)=>{
