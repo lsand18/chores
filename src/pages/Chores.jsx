@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getHouseholdChores, addChore } from '../data/chores.jsx'
+import { getHouseholdChores, updateChore } from '../data/chores.jsx'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getHouseholdById } from '../data/households.jsx'
+import Modal from '../components/Modal.jsx'
 import './Chores.css'
 import 'bulma/css/bulma.css'
 
@@ -11,8 +12,9 @@ const [household, setHousehold] = useState({})
 const navigate = useNavigate()
 const {householdId} = useParams()
 const [showChoreModal, setShowChoreModal] = useState(false)
+const [showEditModal, setShowEditModal] = useState(false)
 const active = showChoreModal ? ("is-active"):("")
-const [newChore, setNewChore] = useState({householdId})
+const activeEdit = showEditModal ? ("is-active"):("")
 
 useEffect(()=>{
 getHouseholdChores(householdId).then((data)=>{
@@ -22,6 +24,7 @@ getHouseholdById(householdId).then((data)=>{
     setHousehold(data)
 })
 },[householdId])
+
 
 const today = new Date();
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -34,58 +37,28 @@ const formattedDate = today.toLocaleDateString(undefined, options);
       onClick={()=>{setShowChoreModal(true)}}
       > Add Chore </button>
       <h3>{formattedDate}</h3>
-      <ul>Chores</ul>
+      <h3>Chores</h3>
       {chores.map(chore => (
-        <li key={chore.id}
-        className='btn'
-        >
-          {chore.name}</li>
+        <div className='chore'
+        key={chore.id}>
+        <label 
+        className='checkbox'>
+            <input type="checkbox" 
+            onChange={updateChore(chore.id)}
+            />
+          {chore.name
+          }</label>
+          <button 
+          onClick={()=>{setShowEditModal(true)}}
+          > Edit Chore </button>
+          </div>
       ))}
       <div className={`modal ${active}`}>
-      <div className="modal-background" />
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">Add Chore</p>
-              <button
-                onClick={()=>{setShowChoreModal(false)}}
-                className="delete"
-                aria-label="close"
-              />
-            </header>
-            <section className="modal-card-body">
-              <div className="field">
-                <label className="label">New Chore Name</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    type="text"
-                    value={newChore.name}
-                    onChange={(event)=>{
-                        const copy = {...newChore}
-                        copy.name = event.target.value
-                        setNewChore(copy)
-                    }}
-                  />
-                </div>
-              </div>
-            </section>
-            <footer className="modal-card-foot">
-              <button className="button is-success"
-                onClick={async ()=>{
-                    //is this accepting an object
-                await addChore(newChore).then(()=> {
-                    setShowChoreModal(false)
-                    setNewChore({})
-              })
-              }}
-              >Save changes</button>
-              <button 
-                onClick={()=>{setShowChoreModal(false)}}
-                className="button">
-                Cancel
-              </button>
-            </footer>
-          </div>
+      <Modal setShowChoreModal={setShowChoreModal} householdId = {household} />
+        </div>
+        <div className={`modal ${activeEdit}`}>
+            {/* add edit modal */}
+            {/* <Modal setShowChoreModal={setShowEditModal}/> */}
         </div>
     </main>
   )

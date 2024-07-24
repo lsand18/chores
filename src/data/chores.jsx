@@ -19,3 +19,13 @@ export function addChore(newChore) {
     })
 }
 
+export function updateChore() {
+    // return fetchWithoutResponse(`chores`, {
+    //     method: 'POST',
+    //     headers: {
+    //         Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify(newChore)
+    // })
+}
