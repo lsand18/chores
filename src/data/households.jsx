@@ -15,3 +15,11 @@ export function getHouseholdById(householdId) {
           }
     })
 }
+
+export function getHouseholdMembersByHouseholdId(householdId) {
+    return fetchWithResponse(`householdmembers?household=${householdId}`, {
+        headers: {
+            Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
+          }
+    })
+}

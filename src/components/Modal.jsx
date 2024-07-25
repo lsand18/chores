@@ -14,7 +14,9 @@ function Modal ({setShowChoreModal}){
             <header className="modal-card-head">
               <p className="modal-card-title">Add Chore</p>
               <button
-                onClick={()=>{setShowChoreModal(false)}}
+                onClick={()=>{setShowChoreModal(false)
+                  setNewChore({ householdId, name: '' })
+                }}
                 className="delete"
                 aria-label="close"
               />
@@ -40,13 +42,15 @@ function Modal ({setShowChoreModal}){
               <button className="button is-success"
                 onClick={async ()=>{
                 await addChore(newChore).then(()=> {
-                    setShowChoreModal(false)
-                    setNewChore({})
+                  setNewChore({ householdId, name: '' })
+                  setShowChoreModal(false)
+                    
               })
               }}
               >Save changes</button>
               <button 
-                onClick={()=>{setShowChoreModal(false)}}
+                onClick={()=>{setShowChoreModal(false)
+                setNewChore({ householdId, name: '' })}}
                 className="button">
                 Cancel
               </button>

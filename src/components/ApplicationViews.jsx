@@ -5,6 +5,8 @@ import { Login } from "../pages/Login.jsx"
 import Home from "../pages/Home"
 import { Register } from '../pages/Register.jsx'
 import Chores from "../pages/Chores"
+import Household from '../pages/Household.jsx'
+import HouseholdDetails from './HouseholdDetails.jsx'
 
 
 export const ApplicationViews = () => {
@@ -17,7 +19,10 @@ export const ApplicationViews = () => {
             <Route element={<Authorized />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/chores/:householdId" element={<Chores />}/>
-                {/* <Route path="/chores/:householdId/addChore" element={<ChoreForm />}/> */}
+                <Route path="/household" >
+                    <Route index element={<Household />}/>
+                    <Route path="/household/:householdId" element={<HouseholdDetails />}/>
+                </Route>
             </Route> 
         </Routes>
     </BrowserRouter>
