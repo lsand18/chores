@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getHouseholdMembersByHouseholdId} from '../data/households.jsx'
 import { useNavigate, useParams } from 'react-router-dom'
+// import "../Chores.css"
 
 function HouseholdDetails() {
 const [household, setHousehold] = useState([])
@@ -18,20 +19,47 @@ getHouseholdMembersByHouseholdId(householdId).then((data)=>{
 
   return (
     
-    <main className='text-slate-900 pl-10 pr-10'>
-        <button className='btn'
+    <main className='box'>
+      <div className='btn-container'>
+        <button className='button is-success'
     onClick={()=>{setShowMemberModal(true)}}
-    > Add A Member </button>
-      <h1 className='text-4xl'>{household.name}</h1>
-      <h3> Members of your Household</h3>
+    > 
+    <span className='icon is-small'>
+        <i className="fa-solid fa-plus"></i>
+      </span>
+      <span> Add A Member</span>
+    </button>
+    </div>
+      <h1 className='title'>{household.name}</h1>
+      {/* where is this? cannot see */}
+      <h3 className='subtitle is-3'> Members of your Household</h3>
+      <div className='container'>
       {household.map(member => (
-        <div className='member'
+        <div className='box'
         key={member.user.id}
         >
-            <p> {member.user.first_name} {member.user.last_name}</p>
+            <p className='title is-6'> {member.user.first_name} {member.user.last_name}</p>
+            <div className='btn-list-container'>
+          <button className='button'
+            onClick={() => { console.log("add modal")}}
+          > 
+          <span className='icon is-small'><i className="fa-regular fa-pen-to-square"></i></span>
+          <span> Edit</span> </button>
+          <button
+          className='button'
+            onClick={() => {
+              console.log("addEditFunction")
+            }}
+          >
+            <span className='icon is-small'>
+            <i className="fa-regular fa-trash-can"></i></span>
+            <span> Delete </span>
+          </button>
+          </div>
         </div>
       )
       )}
+      </div>
       <div className={`modal ${active}`}>
         <div className="modal-background" />
           <div className="modal-card">

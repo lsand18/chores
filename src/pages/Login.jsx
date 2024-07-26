@@ -37,31 +37,33 @@ export const Login = () => {
 
             <section>
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1 className="text-4xl mt-7 mb-3">Welcome to Chore Check</h1>
-                    <h2 className="text-xl mb-10">Please sign in</h2>
-                    <fieldset className="mb-4">
-                        <label htmlFor="inputEmail"> Email address </label>
+                    <h1 className="title">Welcome to Chore Check</h1>
+                    <div>
+                    <h2 className="subtitle">Please sign in</h2>
+                    </div>
+                    <div className="field">
+                        <label className="label" htmlFor="inputEmail"> Email address </label>
                         <input type="email" id="inputEmail"
                             value={email}
                             onChange={evt => setEmail(evt.target.value)}
                             className="form-control"
                             placeholder="Email address"
                             required autoFocus />
-                    </fieldset>
-                    <fieldset className="mb-4">
-                        <label htmlFor="inputPassword"> Password </label>
+                    </div>
+                    <div className="field">
+                        <label className="label" htmlFor="inputPassword"> Password </label>
                         <input type="password" id="inputPassword"
                             value={password}
                             onChange={evt => setPassword(evt.target.value)}
                             className="form-control"
                             placeholder="Password"
                         />
-                    </fieldset>
-                    <fieldset>
-                        <button type="submit" className="button p-3 rounded-md bg-blue-800 text-blue-100">
+                    </div>
+                    <div className="btn-container">
+                        <button type="submit" className="button">
                             Sign in
                         </button>
-                    </fieldset>
+                    </div>
                 </form>
             </section>
             <div className="loginLinks">

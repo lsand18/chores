@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getUserHouseholds } from '../data/households.jsx'
 import { useNavigate } from 'react-router-dom'
+import "./Home.css"
 
 // TODO this would be better as a pop-up dropdown than a page
 function Household() {
@@ -14,16 +15,20 @@ getUserHouseholds().then((data)=>{
 },[])
 
   return (
-    <main className='text-slate-900 pl-10 pr-10'>
-      <h1 className='text-4xl'>Welcome to your Households</h1>
-      <h3>Select a Household</h3>
+    <main className='box'>
+      <h1 className='title is-2'>Welcome to your Households</h1>
+      <div></div>
+      <h3 className='subtitle'>Select a Household</h3>
+      <div className='choices'>
       {households.map(household => (
-        <button key={household.id}
-        className='btn'
+        <button 
+        className='button is-primary is-light'
+        key={household.id}
         onClick={()=>{navigate(`/household/${household.household.id}`)}}
         >
           {household.household.name}</button>
       ))}
+      </div>
     </main>
   )
 }

@@ -14,16 +14,20 @@ getUserHouseholds().then((data)=>{
 },[])
 
   return (
-    <main className='text-slate-900 pl-10 pr-10'>
-      <h1 className='text-4xl'>Welcome to Chore Check</h1>
-      <h3>Select a Household</h3>
+    <main className='box'>
+      <h1 className='title is-2'>Welcome to Chore Check</h1>
+      <div>
+      <h3 className='subtitle'>Select a Household</h3>
+      </div>
+      <div className='choices'>
       {households.map(household => (
         <button key={household.id}
-        className='btn'
+        className='button is-primary is-light'
         onClick={()=>{navigate(`chores/${household.household.id}`)}}
         >
           {household.household.name}</button>
       ))}
+      </div>
     </main>
   )
 }

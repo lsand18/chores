@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { NavBar } from "./Navbar.jsx"
+import { Navigation } from "./Navigation.jsx"
 
 export const Authorized = () => {
   if (localStorage.getItem("chore_token")) {
     return <>
-      <NavBar />
+      <Navigation />
       <main className="p-4">
         <Outlet />
       </main>

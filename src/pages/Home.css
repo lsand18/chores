@@ -1,3 +1,11 @@
-.btn{
-    border: 1px solid black
+.choices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
 }
+
+.button{
+    margin: 20px;
+}
+

@@ -1,50 +1,32 @@
-// import { useEffect, useState } from "react"
 import { deleteChore } from "../data/chores.jsx"
-// import { getChoreById } from "../data/chores.jsx"
+import './deleteModal.css'
 
-function DeleteModal ({setShowDeleteModal, transientChore}){
-    // const[choreObj,setChoreObj] = useState({
-    //     name: ""
-    // })
+function DeleteModal({ setShowDeleteModal, transientChore }) {
 
-    // useEffect(()=>{
-    //     getChoreById(parseInt(choreId)).then((chore)=>{
-    //         setChoreObj(chore)
-    //     })
-    // }, [choreId])
+  return (
+    <>
+      <div className="notification is-danger">
+        <button className="delete"
+          onClick={() => { setShowDeleteModal(false) }}
+        ></button>
+        <p>Are you sure you want to delete <strong>&quot;{transientChore.name}&quot;</strong>?</p>
 
-    return(
-        <>
-        <div className="modal-background" />
-          <div className="modal-card">
-            <header className="modal-card-head">
-              <p className="modal-card-title">Are you sure you want to delete &quot;{transientChore.name}&quot;?</p>
-              <button
-                onClick={()=>{setShowDeleteModal(false)
-                }}
-                className="delete"
-                aria-label="close"
-              />
-            </header>
-            <section className="modal-card-body">
-              <div className="field">
-                <div></div>
-                <button 
-                onClick={()=>{
-                    deleteChore(transientChore.id).then(()=>{
-                        setShowDeleteModal(false)
-                    })}}
-                > Yes </button>
-                </div>
-                <div>
-                <button onClick={()=>{setShowDeleteModal(false)}
-                }> No </button>
-              </div>
-            </section>
-            <footer className="modal-card-foot">
-            </footer>
-          </div>
-</>
-            )}
+        <div className="btn-container">
 
-            export default DeleteModal
+          <button
+            onClick={() => {
+              deleteChore(transientChore.id).then(() => {
+                setShowDeleteModal(false)
+              })
+            }}
+          >Yes</button>
+          <button
+            onClick={() => { setShowDeleteModal(false) }}
+          >No</button>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default DeleteModal

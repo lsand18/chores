@@ -1,10 +1,28 @@
+/* Navbar background color and text styling */
 .navbar {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: left;
+    background-color: #A30000; /* Red background */
 }
 
-.navbar__item {
-    flex-basis: 20%;
-    list-style-type: none;
+.navbar-item, .navbar-brand, .navbar-menu {
+    color: #f2f2f3; /* White text */
 }
+
+.navbar-item, .navbar-brand {
+    font-weight: bold; /* Bold text */
+}
+
+/* Ensure the logo also follows the styling */
+.logo {
+    font-weight: bold; /* Bold text for logo */
+}
+
+/* Optional: Style for active navbar links */
+.navbar-item a {
+    color: #f2f2f3; /* White text for links */
+}
+
+/* Optional: Ensure navbar burger has the right text color if needed */
+.navbar-burger span {
+    background-color: #f2f2f3; /* White lines for the burger icon */
+}
+
