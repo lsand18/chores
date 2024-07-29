@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getHouseholdMembersByHouseholdId} from '../data/households.jsx'
+import { getHouseholdMembersByHouseholdId, deleteMember} from '../data/households.jsx'
 import { useNavigate, useParams } from 'react-router-dom'
 // import "../Chores.css"
 
@@ -10,12 +10,15 @@ const {householdId} = useParams()
 const [showMemberModal, setShowMemberModal] = useState(false)
 const active = showMemberModal ? ("is-active"):("")
 // get all members usernames as state
+const [showDeleteMemberModal, setShowDeleteMemberModal] = useState(false)
+const activeDelete = showDeleteMemberModal ? ("is-active"):("")
+const [transientDelete, setTransientDelete] = useState({})
 
 useEffect(()=>{
 getHouseholdMembersByHouseholdId(householdId).then((data)=>{
   setHousehold(data)
 })
-},[householdId, showMemberModal])
+},[householdId, showMemberModal, showDeleteMemberModal])
 
   return (
     
@@ -30,25 +33,21 @@ getHouseholdMembersByHouseholdId(householdId).then((data)=>{
       <span> Add A Member</span>
     </button>
     </div>
-      <h1 className='title'>{household.name}</h1>
+      <h1 className='title'> {household[0]?.household.name} </h1>
       {/* where is this? cannot see */}
-      <h3 className='subtitle is-3'> Members of your Household</h3>
+      <h3 className='subtitle is-4'> Members of your Household</h3>
       <div className='container'>
       {household.map(member => (
         <div className='box'
         key={member.user.id}
         >
-            <p className='title is-6'> {member.user.first_name} {member.user.last_name}</p>
+            <p className='title is-6'> {member?.user.first_name} {member?.user.last_name}</p>
             <div className='btn-list-container'>
-          <button className='button'
-            onClick={() => { console.log("add modal")}}
-          > 
-          <span className='icon is-small'><i className="fa-regular fa-pen-to-square"></i></span>
-          <span> Edit</span> </button>
           <button
           className='button'
             onClick={() => {
-              console.log("addEditFunction")
+              setTransientDelete(member)
+              setShowDeleteMemberModal(true)
             }}
           >
             <span className='icon is-small'>
@@ -100,13 +99,36 @@ getHouseholdMembersByHouseholdId(householdId).then((data)=>{
               }}
               >Save</button>
               <button 
-                onClick={()=>{setShoeMemberModal(false)}}
+                onClick={()=>{setShowMemberModal(false)}}
                 className="button">
                 Cancel
               </button>
             </footer>
           </div>
     </div>
+    {/* Delete Modal */}
+    <div className={`modal ${activeDelete}`}>
+    <div className="notification is-danger">
+        <button className="delete"
+          onClick={() => { setShowDeleteMemberModal(false) }}
+        ></button>
+        <p>Are you sure you want to delete <strong>&quot;{transientDelete?.user?.first_name} {transientDelete?.user?.last_name}&quot;</strong> from your household?</p>
+
+        <div className="btn-container">
+
+          <button
+            onClick={() => {
+              deleteMember(transientDelete.id).then(() => {
+                setShowDeleteMemberModal(false)
+              })
+            }}
+          >Yes</button>
+          <button
+            onClick={() => { setShowDeleteMemberModal(false) }}
+          >No</button>
+        </div>
+      </div>
+      </div>
     </main>
   )
 }

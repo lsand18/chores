@@ -34,7 +34,7 @@ function Chores() {
 
   return (
     <main className='box'>
-      <h1 className='title'>{household.name}</h1>
+      <h1 className='title'>{household?.name}</h1>
       <div className='btn-container'>
       <button className='button is-success'
         onClick={() => { setShowChoreModal(true) }}
@@ -69,6 +69,11 @@ function Chores() {
             &nbsp;&nbsp;{chore.name}
             </p>
             </label>
+            
+              {chore.feed ? (
+                <div className='subtitle is-5'>
+            Feed: {chore.feed?.name} </div> ): ("")}
+            
           {/* TODO: add toggle for these buttons */}
           <div className='btn-list-container'>
           <button className='button'
