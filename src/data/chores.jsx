@@ -45,3 +45,14 @@ export function deleteChore(choreId) {
       },
     })
   }
+
+  export function updateChoreContent(choreObj) {
+    return fetchWithoutResponse(`chores/${choreObj.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(choreObj)
+    })
+}

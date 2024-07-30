@@ -1,13 +1,12 @@
 import { useParams } from "react-router-dom"
-import { addChore } from "../data/chores.jsx"
+import { updateChoreContent } from "../data/chores.jsx"
 import { useEffect, useState } from "react"
 import { getFeedByHouseId } from "../data/feed.jsx"
 import "./modal.css"
 
-function Modal({ setShow, transientChore }) {
+function EditModal({ setShow, transientChore, setTransientChore }) {
 
   const { householdId } = useParams()
-  const [newChore, setNewChore] = useState({ householdId, name: "", feedId:"" })
   const [houseFeed, setHouseFeed] = useState([])
  
 
@@ -22,11 +21,11 @@ function Modal({ setShow, transientChore }) {
       <div className="modal-background" />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Add Chore</p>
+          <p className="modal-card-title">Edit Chore</p>
           <button
             onClick={() => {
               setShow(false)
-              setNewChore({ householdId, name: '' })
+              setTransientChore({})
             }}
             className="delete"
             aria-label="close"
@@ -34,16 +33,16 @@ function Modal({ setShow, transientChore }) {
         </header>
         <section className="modal-card-body">
           <div className="field">
-            <label className="label">New Chore Name</label>
+            <label className="label">Chore Name</label>
             <div className="control">
               <input
                 className="input"
                 type="text"
-                value={newChore.name}
+                value={transientChore.name}
                 onChange={(event) => {
-                  const copy = { ...newChore }
+                  const copy = { ...transientChore }
                   copy.name = event.target.value
-                  setNewChore(copy)
+                  setTransientChore(copy)
                 }}
               />
             </div>
@@ -51,11 +50,12 @@ function Modal({ setShow, transientChore }) {
           <div className="feed">
           <div className="select is-primary">
             <select 
-            value={newChore.feedId}
+            value={transientChore.feed ? (transientChore.feed.id):("")}
             onChange={(event) => {
-                  const copy = { ...newChore }
-                  copy.feedId = parseInt(event.target.value)
-                  setNewChore(copy)}}>
+                  const copy = { ...transientChore }
+                  copy.feed = houseFeed.find(item => item.id === parseInt(event.target.value));
+
+                  setTransientChore(copy)}}>
               
             <option disabled value="">Select a Feed </option>
           {houseFeed.map((feed) => {
@@ -72,11 +72,13 @@ function Modal({ setShow, transientChore }) {
           </div>
           <div className="button-container">
           <button className="button is-primary"
-          // onClick={()=>{
-          //   setShowFeedModal
-          // }}
+          onClick={()=>{
+                const copy = { ...transientChore }
+                copy.feed = null
+                setTransientChore(copy)
+          }}
           >
-            Add New Feed
+            Remove Feed
           </button>
           </div>
           </div>
@@ -84,8 +86,8 @@ function Modal({ setShow, transientChore }) {
     <footer className="modal-card-foot">
       <button className="button is-success"
         onClick={async () => {
-          await addChore(newChore).then(() => {
-            setNewChore({ householdId, name: '', feedId: "" })
+          await updateChoreContent(transientChore).then(() => {
+            setTransientChore({})
             setShow(false)
 
           })
@@ -94,7 +96,7 @@ function Modal({ setShow, transientChore }) {
       <button
         onClick={() => {
           setShow(false)
-          setNewChore({ householdId, name: '', feedId: "" })
+          setTransientChore({})
         }}
         className="button">
         Cancel
@@ -105,4 +107,4 @@ function Modal({ setShow, transientChore }) {
   )
 }
 
-export default Modal
+export default EditModal

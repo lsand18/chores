@@ -44,3 +44,23 @@ export function deleteMember(memberId) {
       },
     })
   }
+
+
+export function getUsersBySearchTerm(searchTerm) {
+    return fetchWithResponse(`users?q=${searchTerm}`, {
+        headers: {
+            Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
+          }
+    })
+}
+
+export function addHouseholdMember (newMembers, householdId) {
+  return fetchWithoutResponse(`householdmembers`, {
+      method: 'POST',
+      headers: {
+          Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({newMembers, householdId})
+  })
+}

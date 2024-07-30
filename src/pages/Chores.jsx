@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getHouseholdById } from '../data/households.jsx'
 import Modal from '../components/Modal.jsx'
 import DeleteModal from '../components/deleteModal.jsx'
+import EditModal from '../components/EditModal.jsx'
 import './Chores.css'
 
 function Chores() {
@@ -18,14 +19,18 @@ function Chores() {
   const activeDelete = showDeleteModal ? ('is-active') : ("")
   const [transientChore, setTransientChore] = useState({})
 
-  useEffect(() => {
+  const updateChoresOnPage = () =>{
     getHouseholdChores(householdId).then((data) => {
       setChores(data)
     })
+  }
+  
+  useEffect(() => {
+    updateChoresOnPage()
     getHouseholdById(householdId).then((data) => {
       setHousehold(data)
     })
-  }, [householdId, showChoreModal, showDeleteModal])
+  }, [householdId, showChoreModal, showDeleteModal, showEditModal])
 
 
   const today = new Date();
@@ -60,7 +65,7 @@ function Chores() {
               defaultChecked={chore.complete}
               onClick={() => {
                 updateChore(chore.id).then(() => {
-                  getHouseholdChores(householdId)
+                  updateChoresOnPage()
                 })
               }
               }
@@ -75,10 +80,20 @@ function Chores() {
             Feed: {chore.feed?.name} </div> ): ("")}
             
           {/* TODO: add toggle for these buttons */}
+          
+            {chore.user ? (
+             <div className='user-container'>
+            Completed By: {chore.user.first_name} {chore.user.last_name} 
+            </div>
+            ): ("")}
+          
           <div className='btn-list-container'>
           <button className='button'
             value={chore.id}
-            onClick={() => { setShowEditModal(true) }}
+            onClick={() => {
+              setTransientChore(chore)
+              setShowEditModal(true)
+            }}
           > 
           <span className='icon is-small'><i className="fa-regular fa-pen-to-square"></i></span>
           <span> Edit</span> </button>
@@ -98,11 +113,11 @@ function Chores() {
       ))}
       </div>
       <div className={`modal ${active}`}>
-        <Modal setShowChoreModal={setShowChoreModal} householdId={household} />
+        <Modal setShow={setShowChoreModal}/>
       </div>
       <div className={`modal ${activeEdit}`}>
         {/* add edit modal */}
-        {/* <Modal setShowChoreModal={setShowEditModal}/> */}
+        <EditModal setShow={setShowEditModal} transientChore={transientChore} setTransientChore={setTransientChore}/>
       </div>
       <div className={`modal ${activeDelete}`}>
         <DeleteModal setShowDeleteModal={setShowDeleteModal} transientChore={transientChore} />

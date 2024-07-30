@@ -1,0 +1,5 @@
+
+.modal-card-body {
+    display: flex;
+    justify-content: space-between;
+}
