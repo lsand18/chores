@@ -23,6 +23,9 @@ const catchError = (err) => {
   if (err.message === '404') {
     throw Error(err.message);
   }
+  if(err.message === '500'){
+    window.alert("you cannot delete this resource because it is being used by another")
+  }
 }
 
 export const fetchWithResponse = (resource, options) => fetch(`${API_URL}/${resource}`, options)

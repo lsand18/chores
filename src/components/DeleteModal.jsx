@@ -9,21 +9,22 @@ function DeleteModal({ setShowDeleteModal, transientChore }) {
         <button className="delete"
           onClick={() => { setShowDeleteModal(false) }}
         ></button>
-        <p>Are you sure you want to delete <strong>&quot;{transientChore.name}&quot;</strong>?</p>
+        <p className="title is-6">Are you sure you want to delete <strong>&quot;{transientChore.name}&quot;</strong>?</p>
 
         <div className="btn-container">
 
-          <button
+          <button className="button"
             onClick={() => {
               deleteChore(transientChore.id).then(() => {
                 setShowDeleteModal(false)
               })
             }}
           >Yes</button>
-          <button
+          <button className="button"
             onClick={() => { setShowDeleteModal(false) }}
           >No</button>
         </div>
+
       </div>
     </>
   )

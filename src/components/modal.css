@@ -1,5 +1,24 @@
-.feed{
+/* .feed{
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+} */
+.modal-card-body{
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.modal-card-body > * {
+    align-self: center;
+    width: 70%;
+}
+.select.is-primary > * {
+    width: 90%;
+}
+.title.is-6{
+    margin-top: 10px;
+    text-align: center;
 }

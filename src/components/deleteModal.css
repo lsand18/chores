@@ -1,7 +1,7 @@
-.btn-container{
+.notification.is-danger{
+    padding: 40px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-    
-  
-  

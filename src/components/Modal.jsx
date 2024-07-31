@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom"
 import { addChore } from "../data/chores.jsx"
 import { useEffect, useState } from "react"
-import { getFeedByHouseId } from "../data/feed.jsx"
+import { getFeedByHouseId, addFeed } from "../data/feed.jsx"
+import FeedModal from "./FeedModal.jsx"
 import "./modal.css"
 
 function Modal({ setShow, transientChore }) {
@@ -9,12 +10,16 @@ function Modal({ setShow, transientChore }) {
   const { householdId } = useParams()
   const [newChore, setNewChore] = useState({ householdId, name: "", feedId:"" })
   const [houseFeed, setHouseFeed] = useState([])
+  const [showFeedModal, setShowFeedModal] = useState(false)
+  const active = showFeedModal ? ("is-active") : ("")
  
+const refresh = () => {
+  getFeedByHouseId(householdId).then((data) => {
+    setHouseFeed(data)
+})}
 
   useEffect(() => {
-    getFeedByHouseId(householdId).then((data) => {
-      setHouseFeed(data)
-    })
+    refresh()
   }, [householdId])
 
   return (
@@ -48,7 +53,6 @@ function Modal({ setShow, transientChore }) {
               />
             </div>
           </div>
-          <div className="feed">
           <div className="select is-primary">
             <select 
             value={newChore.feedId}
@@ -70,16 +74,13 @@ function Modal({ setShow, transientChore }) {
           <div>
           <p className="title is-6"> OR </p>
           </div>
-          <div className="button-container">
           <button className="button is-primary"
-          // onClick={()=>{
-          //   setShowFeedModal
-          // }}
+          onClick={()=>{
+            setShowFeedModal(true)
+          }}
           >
             Add New Feed
           </button>
-          </div>
-          </div>
         </section>
     <footer className="modal-card-foot">
       <button className="button is-success"
@@ -90,7 +91,7 @@ function Modal({ setShow, transientChore }) {
 
           })
         }}
-      >Save changes</button>
+      >Save Chore</button>
       <button
         onClick={() => {
           setShow(false)
@@ -101,6 +102,11 @@ function Modal({ setShow, transientChore }) {
       </button>
     </footer>
       </div >
+
+{/* Feed Modal */}
+      <div className={`modal ${active}`}>
+      <FeedModal setShowFeedModal={setShowFeedModal} householdId={householdId} setFeed={setHouseFeed}/>
+      </div>
     </>
   )
 }

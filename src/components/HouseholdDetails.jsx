@@ -16,12 +16,15 @@ function HouseholdDetails() {
   const [searchTerm, setSearchTerm] = useState("")
   const [searchedUsers, setSearchedUsers] = useState([])
   const [newMembers, setNewMembers] = useState([])
-  
-  useEffect(() => {
+
+  const refresh = () =>{
     getHouseholdMembersByHouseholdId(householdId).then((data) => {
       setHousehold(data)
     })
-  }, [householdId, showMemberModal, showDeleteMemberModal])
+  }
+  useEffect(() => {
+    refresh()
+    }, [householdId, showMemberModal, showDeleteMemberModal])
 
   useEffect(()=>{
       getUsersBySearchTerm(searchTerm).then((data)=>{
@@ -50,7 +53,7 @@ function HouseholdDetails() {
           <div className='box'
             key={member.user.id}
           >
-            <p className='title is-6'> {member?.user.first_name} {member?.user.last_name}</p>
+            <p className='title is-5'> {member?.user.first_name} {member?.user.last_name}</p>
             <div className='btn-list-container'>
               <button
                 className='button'
@@ -61,7 +64,7 @@ function HouseholdDetails() {
               >
                 <span className='icon is-small'>
                   <i className="fa-regular fa-trash-can"></i></span>
-                <span> Delete </span>
+                {/* <span> Delete </span> */}
               </button>
             </div>
           </div>
@@ -123,11 +126,12 @@ function HouseholdDetails() {
           <footer className="modal-card-foot">
             <button className="button is-success"
               onClick={async () => {
-                addHouseholdMember(newMembers, householdId)
+                addHouseholdMember(newMembers, householdId).then(()=>{
+                  refresh()
                 setShowMemberModal(false)
                 setNewMembers([])
                 setSearchedUsers([])
-                setSearchTerm("")
+                setSearchTerm("")})
               }}
             >Save</button>
             <button
@@ -145,18 +149,19 @@ function HouseholdDetails() {
           <button className="delete"
             onClick={() => { setShowDeleteMemberModal(false) }}
           ></button>
-          <p>Are you sure you want to delete <strong>&quot;{transientDelete?.user?.first_name} {transientDelete?.user?.last_name}&quot;</strong> from your household?</p>
+          <p className="title is-6">Are you sure you want to delete <strong>&quot;{transientDelete?.user?.first_name} {transientDelete?.user?.last_name}&quot;</strong> from your household?</p>
 
           <div className="btn-container">
 
-            <button
+            <button className='button'
               onClick={() => {
                 deleteMember(transientDelete.id).then(() => {
+                  refresh()
                   setShowDeleteMemberModal(false)
                 })
               }}
             >Yes</button>
-            <button
+            <button className='button'
               onClick={() => { setShowDeleteMemberModal(false) }}
             >No</button>
           </div>

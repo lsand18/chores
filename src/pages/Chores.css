@@ -26,6 +26,7 @@ input[type='checkbox']:checked {
     flex-direction: column;
 }
 .box{
+    display: flex;
     width: 90%;
 }
 .btn-list-container {
@@ -42,4 +43,9 @@ input[type='checkbox']:checked {
 .user-container {
     display: flex;
     justify-content: flex-end;
+}
+
+.checkbox {
+   width: 90%; 
+   align-self: left;
 }

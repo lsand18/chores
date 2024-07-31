@@ -47,7 +47,6 @@ function EditModal({ setShow, transientChore, setTransientChore }) {
               />
             </div>
           </div>
-          <div className="feed">
           <div className="select is-primary">
             <select 
             value={transientChore.feed ? (transientChore.feed.id):("")}
@@ -70,7 +69,6 @@ function EditModal({ setShow, transientChore, setTransientChore }) {
           <div>
           <p className="title is-6"> OR </p>
           </div>
-          <div className="button-container">
           <button className="button is-primary"
           onClick={()=>{
                 const copy = { ...transientChore }
@@ -80,8 +78,6 @@ function EditModal({ setShow, transientChore, setTransientChore }) {
           >
             Remove Feed
           </button>
-          </div>
-          </div>
         </section>
     <footer className="modal-card-foot">
       <button className="button is-success"
@@ -92,7 +88,7 @@ function EditModal({ setShow, transientChore, setTransientChore }) {
 
           })
         }}
-      >Save changes</button>
+      >Save Chore</button>
       <button
         onClick={() => {
           setShow(false)

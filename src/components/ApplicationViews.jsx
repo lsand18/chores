@@ -7,6 +7,8 @@ import { Register } from '../pages/Register.jsx'
 import Chores from "../pages/Chores"
 import Household from '../pages/Household.jsx'
 import HouseholdDetails from './HouseholdDetails.jsx'
+import Feed from '../pages/Feed.jsx'
+import FeedByHouse from '../pages/FeedByHouse.jsx'
 
 
 export const ApplicationViews = () => {
@@ -22,6 +24,10 @@ export const ApplicationViews = () => {
                 <Route path="/household" >
                     <Route index element={<Household />}/>
                     <Route path="/household/:householdId" element={<HouseholdDetails />}/>
+                </Route>
+                <Route path="/feed" >
+                    <Route index element={<Feed />}/>
+                    <Route path="/feed/:householdId" element={<FeedByHouse />} />
                 </Route>
             </Route> 
         </Routes>
