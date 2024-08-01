@@ -77,7 +77,7 @@ function Chores() {
             
               {chore.feed ? (
                 <div className='subtitle is-5'>
-            Feed: {chore.feed?.name} </div> ): ("")}
+            Supply: {chore.feed?.name} </div> ): ("")}
             
           {/* TODO: add toggle for these buttons */}
           

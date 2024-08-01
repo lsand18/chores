@@ -46,13 +46,12 @@ export function deleteMember(memberId) {
   }
 
 
-export function getUsersBySearchTerm(searchTerm) {
-    return fetchWithResponse(`users?q=${searchTerm}`, {
+  export function getUsersBySearchTerm(searchTerm, householdId) {
+    return fetchWithResponse(`users?q=${searchTerm}&household=${householdId}`, {
         headers: {
             Authorization: `Token ${JSON.parse(localStorage.getItem("chore_token")).token}`,
-          }
-    })
-}
+          },
+        })}
 
 export function addHouseholdMember (newMembers, householdId) {
   return fetchWithoutResponse(`householdmembers`, {

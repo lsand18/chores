@@ -1,5 +1,13 @@
-
-.modal-card-body {
+.card {
     display: flex;
     justify-content: space-between;
+    width: 90%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
 }

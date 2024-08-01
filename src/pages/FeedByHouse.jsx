@@ -34,12 +34,12 @@ return(
     <span className='icon is-small'>
       <i className="fa-solid fa-plus"></i>
     </span>
-    <span>Add Feed</span> </button>
+    <span>Add Supplies</span> </button>
     
     </div>
 
     <div className='header'>
-      <h3 className='title is-4'>Feed</h3>
+      <h3 className='title is-4'>Supplies</h3>
       </div>
 
       <div className='container'>
@@ -49,7 +49,10 @@ return(
             <p className="title">
             &nbsp;&nbsp;{feedItem.name}
             </p>
-
+            {feedItem.servingsLeft ? (
+                <div className='subtitle is-5'>
+            &nbsp;&nbsp;&nbsp;&nbsp;Servings Left:  {feedItem.servingsLeft} </div> ): ("")}
+            
             <div className='btn-list-container'>
           <button className='button'
             value={feedItem.id}
@@ -62,15 +65,8 @@ return(
           <button
           className='button'
             onClick={() => {
-              deleteFeed(feedItem.id).then((res)=>{
-                res !={"message":"FOREIGN KEY constraint failed"} ?(
-                  refresh()
-                ):(
-                  window.alert("You cannot delete this")
-                )
-                
-              })
-            }}
+              deleteFeed(feedItem.id).then(()=>{
+                refresh()})}}
           >
             <span className='icon is-small'>
             <i className="fa-regular fa-trash-can"></i></span>

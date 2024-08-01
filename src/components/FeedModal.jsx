@@ -3,7 +3,7 @@ import { useState } from "react"
 
 
 function FeedModal({setShowFeedModal, householdId, setFeed}) {
-    const [newFeed, setNewFeed] = useState({ householdId, name: "", url:"" })
+    const [newFeed, setNewFeed] = useState({ householdId, name: "", url:"", totalServings: 0})
     const refresh = () => {
         getFeedByHouseId(householdId).then((data) => {
           setFeed(data)
@@ -14,11 +14,11 @@ function FeedModal({setShowFeedModal, householdId, setFeed}) {
 <div className="modal-background" />
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">Add Feed</p>
+          <p className="modal-card-title">Add Supply</p>
           <button
             onClick={() => {
               setShowFeedModal(false)
-              setNewFeed({ householdId, name: '', url: "" })
+              setNewFeed({ householdId, name: '', url: "",  totalServings: 0 })
             }}
             className="delete"
             aria-label="close"
@@ -26,7 +26,7 @@ function FeedModal({setShowFeedModal, householdId, setFeed}) {
         </header>
         <section className="modal-card-body">
           <div className="field">
-            <label className="label">New Feed Name</label>
+            <label className="label">New Supply Name</label>
             <div className="control">
               <input
                 className="input"
@@ -41,7 +41,7 @@ function FeedModal({setShowFeedModal, householdId, setFeed}) {
             </div>
           </div>
           <div className="field">
-            <label className="label">Link to purchase Feed</label>
+            <label className="label">Link to Purchase Supplies</label>
             <div className="control">
               <input
                 className="input"
@@ -55,13 +55,28 @@ function FeedModal({setShowFeedModal, householdId, setFeed}) {
               />
             </div>
           </div>
+          <div className="field">
+            <label className="label">Total Number of Servings/Uses</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                value={newFeed?.totalServings}
+                onChange={(event) => {
+                  const copy = { ...newFeed }
+                  copy.totalServings = event.target.value
+                  setNewFeed(copy)
+                }}
+              />
+            </div>
+          </div>
         </section>
     <footer className="modal-card-foot">
       <button className="button is-success"
         onClick={async () => {
           await addFeed(newFeed).then(() => {
             refresh()
-            setNewFeed({ householdId, name: '', url: "" })
+            setNewFeed({ householdId, name: '', url: "", totalServings: 0 })
             setShowFeedModal(false)
 
           })
@@ -70,7 +85,7 @@ function FeedModal({setShowFeedModal, householdId, setFeed}) {
       <button
         onClick={() => {
           setShowFeedModal(false)
-          setNewFeed({ householdId, name: '', url: "" })
+          setNewFeed({ householdId, name: '', url: "",  totalServings: 0 })
         }}
         className="button">
         Cancel

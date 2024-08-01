@@ -27,7 +27,7 @@ function HouseholdDetails() {
     }, [householdId, showMemberModal, showDeleteMemberModal])
 
   useEffect(()=>{
-      getUsersBySearchTerm(searchTerm).then((data)=>{
+      getUsersBySearchTerm(searchTerm, householdId).then((data)=>{
         setSearchedUsers(data)
       })
   },[searchTerm])
@@ -83,12 +83,12 @@ function HouseholdDetails() {
             />
           </header>
           <section className="modal-card-body">
+            <div className='card'>
             <div className="dropdown is-active">
                 <div className="dropdown-content">
 
                   <div className="field dropdown-item">
                     <div className="control has-icons-left">
-                      {/* TODO: clear input field on cancel */}
                       <input type="text" value={searchTerm} placeholder="Type Member's Name..." className="input is-transparent"
                       onChange={(event)=>{setSearchTerm(event.target.value)}}
                       />
@@ -98,7 +98,7 @@ function HouseholdDetails() {
                     </div>
                   </div>
 
-                  {searchedUsers.map(user => (
+                  {searchedUsers?.map(user => (
                   <a key={user.id} className="dropdown-item"
                   onClick={()=>{
                     const copy = [ ...newMembers]
@@ -121,6 +121,7 @@ function HouseholdDetails() {
                       </li>
                     ))}
                   </ul>
+                </div>
                 </div>
           </section>
           <footer className="modal-card-foot">

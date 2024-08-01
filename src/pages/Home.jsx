@@ -35,7 +35,7 @@ getUserHouseholds().then((data)=>{
       {households.map(household => (
         <button key={household.id}
         className='button is-primary is-light'
-        onClick={()=>{navigate(`chores/${household.household.id}`)}}
+        onClick={()=>{navigate(`/${household.household.id}`)}}
         >
           {household.household.name}</button>
       ))}

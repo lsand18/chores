@@ -12,6 +12,7 @@ function Modal({ setShow, transientChore }) {
   const [houseFeed, setHouseFeed] = useState([])
   const [showFeedModal, setShowFeedModal] = useState(false)
   const active = showFeedModal ? ("is-active") : ("")
+  const [showFeedButtons, setShowFeedButtons] = useState(false)
  
 const refresh = () => {
   getFeedByHouseId(householdId).then((data) => {
@@ -31,7 +32,8 @@ const refresh = () => {
           <button
             onClick={() => {
               setShow(false)
-              setNewChore({ householdId, name: '' })
+              setShowFeedButtons(false)
+              setNewChore({ householdId, name: '', feedId: "" })
             }}
             className="delete"
             aria-label="close"
@@ -53,7 +55,58 @@ const refresh = () => {
               />
             </div>
           </div>
-          <div className="select is-primary">
+          <hr className="bd-hr"></hr>
+          {showFeedButtons ? (
+            <>
+            <div className="select is-primary">
+            <select 
+            value={newChore.feedId}
+            onChange={(event) => {
+                  const copy = { ...newChore }
+                  copy.feedId = parseInt(event.target.value)
+                  setNewChore(copy)}}>
+              
+            <option disabled value="">Select Supply Item </option>
+          {houseFeed.map((feed) => {
+            return (
+              <option key={feed.id} value={feed.id}>
+              {feed.name}
+              </option>
+            )
+          })}
+          </select>
+          </div>
+          <div>
+          <p className="title is-6"> OR </p>
+          </div>
+          <button className="button is-primary"
+          onClick={()=>{
+            setShowFeedModal(true)
+          }}
+          >
+            <span className='icon is-small'>
+      <i className="fa-solid fa-plus"></i>
+    </span>
+    <span>Add  New Supply</span>
+          </button>
+          </>
+        ):(
+          <>
+          <p className="title is-6">Does this chore require supplies?</p>
+
+<div className="btn-container2">
+
+  <button className='button'
+    onClick={() => {
+      setShowFeedButtons(true)
+      }}
+  >Yes</button>
+  <button className='button'
+  >No</button>
+</div>
+</>)}
+        </section>
+          {/* <div className="select is-primary">
             <select 
             value={newChore.feedId}
             onChange={(event) => {
@@ -81,13 +134,14 @@ const refresh = () => {
           >
             Add New Feed
           </button>
-        </section>
+        </section> */}
     <footer className="modal-card-foot">
       <button className="button is-success"
         onClick={async () => {
           await addChore(newChore).then(() => {
             setNewChore({ householdId, name: '', feedId: "" })
             setShow(false)
+            setShowFeedButtons(false)
 
           })
         }}
@@ -95,6 +149,7 @@ const refresh = () => {
       <button
         onClick={() => {
           setShow(false)
+          setShowFeedButtons(false)
           setNewChore({ householdId, name: '', feedId: "" })
         }}
         className="button">

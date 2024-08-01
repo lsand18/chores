@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 export const Navigation = () => {
     const [isActive, setIsActive] = useState(false);
     const navigate = useNavigate();
+    const {householdId} = useParams()
 
     const toggleNav = () => setIsActive(!isActive);
 
@@ -31,15 +33,17 @@ export const Navigation = () => {
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
-                <div id="navbarMenu" className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
+                {householdId ? (
                     <div className="navbar-start">
                         <a className="navbar-item">
-                            <NavLink to="/household">View Your Household</NavLink>
+                        <NavLink to={`/${householdId}/household`}>View Your Household</NavLink>
                         </a>
                         <a className="navbar-item">
-                            <NavLink to="/feed">View Feed</NavLink>
+                        <NavLink to={`/${householdId}/feed`}>View Supplies</NavLink>
                         </a>
-                    </div>
+                    </div>):("")}
+                <div id="navbarMenu" className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
+                    
                     <div className="navbar-end">
                         <a
                             className="navbar-item"
